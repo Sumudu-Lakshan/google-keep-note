@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Keep Notes</title>
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
+    <style>
+        .container{
+            position: absolute;
+            width: 600px;
+            height: fit-content;
+            background-color:beige;
+            border: 1px solid thistle;
+            top: 50px;
+            left: 400px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.20) !important;
+            /* margin: auto; */
+        }
+
+        #packerygrid{
+            margin-top: 200px;
+            margin-left: 100px;
+        }
+
+        body{
+            font-family: 'Noto Sans SC', sans-serif;
+            color: gray;
+            font-weight: bold;
+            
+        }
+        #title,#takeanote{
+            border: none;
+            outline: none;
+           
+        }
+
+        #title{
+            width: 100%;
+        }
+
+        #closebutton{
+            position: absolute;
+            display: inline-block;
+            margin-left: 450px;
+            color:black;
+        }
+
+        #plussign{
+            position: absolute;
+            margin-left: 50px;        
+
+            }
+
+        #listitem{
+            /* padding: 0 10px;  */
+            width: 470px;
+            margin-left: 80px;
+            border: none;
+            outline: none !important;
+
+        }
+
+        #row{
+            width: 100%;
+            height: 30px;
+        }
+
+        #colorpicker{
+            box-shadow: 0 3px 5px rgba(0,0,0,0.20);
+            background-color: white;
+            width: 160px;
+            height: 122px;
+            border: 0px solid black;
+            position: absolute;
+            left: 80px;
+            top: -110px;
+
+        }
+
+        #firstrow,#secondrow,#thirdrow{
+            
+            width: 100%;
+            height: 40px;
+           
+        }
+
+
+
+        #c1,#c2,#c3,#c4,#c5,#c6,#c7,#c8,#c9,#c10,#c11,#c12{
+            float: left;
+            width: 25%;
+            height: 40px;
+            border-radius: 20px;
+            /* border: 1px solid gray; */
+        }
+
+        #c1{
+            border: 1px solid gray;
+        }
+
+        * { box-sizing: border-box; } 
+
+body { font-family: sans-serif; }
+
+/* ---- grid ---- */
+
+.grid {
+  background: #DDD;
+  max-width: 1200px;
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+.grid-item {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background: #C09;
+  border: 2px solid hsla(0, 0%, 0%, 0.5);
+}
+
+.grid-item--width2 { width: 200px; }
+.grid-item--height2 { height: 200px; }
+
+.grid-item:hover {
+  border-color: hsla(0, 0%, 100%, 0.5);
+  cursor: move;
+}
+
+.grid-item.ui-draggable-dragging,
+.grid-item.is-positioning-post-drag {
+  background: #C90;
+  z-index: 2;
+}
+
+.packery-drop-placeholder {
+  outline: 3px dashed hsla(0, 0%, 0%, 0.5);
+  outline-offset: -6px;
+  -webkit-transition: -webkit-transform 0.2s;
+          transition: transform 0.2s;
+}
+       
+    </style>
+
+</head>
+
+<body>
+    <div class="container rounded shadow p-3 mb-5 bg-white rounded" id="containerbox">
+        <!-- <div  class="border-bottom">
+            Title
+        </div> -->
+        <form>
+            <div class="form-group">
+
+
+                <input type="title" id="title" aria-describedby="emailHelp" placeholder="Title" class="border-bottom">
+                <input type="takeanote" id="takeanote" placeholder="Take a note...">
+                <div class="form-group" id="formcontainer">
+
+                    <div id="row" class="border-bottom">
+                        <span id="plussign"><i class="fas fa-plus"></i></span>
+                        <input type="takeanote" id="listitem" placeholder="List Item">
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
+
+
+        <div class="form-group form-check icons">
+            <i class="far fa-image" data-toggle="tooltip" data-placement="bottom" title="Add image"></i>
+            <i class="fas fa-palette" id="colorchanger" data-toggle="tooltip" data-placement="bottom" title="Change Color"
+                style="margin-left:30px">
+
+                <div id="colorpicker">
+                    <div id="firstrow">
+
+                        <div id="c1" style="background-color:white"></div>
+                        <div id="c2" style="background-color:rgb(242, 139, 130)"></div>
+                        <div id="c3" style="background-color:rgb(251, 188, 4)"></div>
+                        <div id="c4" style="background-color:rgb(255, 244, 117)"></div>
+
+                    </div>
+
+                    <div id="secondrow">
+                        <div id="c5" style="background-color:rgb(204, 255, 144)"></div>
+                        <div id="c6" style="background-color:rgb(167, 255, 235)"></div>
+                        <div id="c7" style="background-color:rgb(203, 240, 248)"></div>
+                        <div id="c8" style="background-color:rgb(174, 203, 250)"></div>
+                    </div>
+                    <div id="thirdrow">
+                        <div id="c9" style="background-color:rgb(215, 174, 251)"></div>
+                        <div id="c10" style="background-color:rgb(253, 207, 232)"></div>
+                        <div id="c11" style="background-color:rgb(230, 201, 168)"></div>
+                        <div id="c12" style="background-color:rgb(232, 234, 237)"></div>
+                    </div>
+                </div>
+
+            </i>
+            <i class="far fa-bell" data-toggle="tooltip" data-placement="bottom" title="Remind me" style=" margin-left:30px"></i>
+            <i class="fas fa-ellipsis-v" data-toggle="tooltip" data-placement="bottom" title="More" style="margin-left:30px"></i>
+            <i class="fas fa-undo" data-toggle="tooltip" data-placement="bottom" title="Undo" style="margin-left:30px"></i>
+            <button type="button" class="btn btn-light" style="margin-left:250px">Close</button>
+        </div>
+
+
+    </div>
+
+    
+    <div>
+        <div class="grid" id="packerygrid">
+            <div class="grid-item grid-item--width2"></div>
+            <div class="grid-item grid-item--height2"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item grid-item--width2 grid-item--height2"></div>
+            <div class="grid-item grid-item--width2"></div>
+            <div class="grid-item grid-item--width2"></div>
+            <div class="grid-item grid-item--height2"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item grid-item--width2"></div>
+            <div class="grid-item grid-item--height2"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item grid-item--width2 grid-item--height2"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item grid-item--width2"></div>
+            <div class="grid-item grid-item--height2"></div>
+            <div class="grid-item"></div>
+        </div>
+
+    </div>
+
+   
+
+
+
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+
+        $("#takeanote").click(function () {
+
+            $("#title").show();
+            $(".icons").show();
+            $("#listitem").show();
+            $("#takeanote").hide();
+            $("#plussign").show();
+            $(".border-bottom").show();
+
+        });
+
+        $("#colorchanger").mouseover(function () {
+            $("#colorpicker").show();
+            $("#c2").click(function () {
+                $("#containerbox").css("background-color",'rgb(242, 139, 130)');
+            });
+        });
+        $("#colorchanger").mouseout(function () {
+            $("#colorpicker").hide();
+        });
+
+        $(window).on("load", function () {
+            $("#takeanote").focus();
+            $("#title").hide();
+            $(".icons").hide();
+            $("#listitem").hide();
+            $("#plussign").hide();
+            $(".border-bottom").hide();
+            $("#colorpicker").hide();
+        });
+    </script>
+
+    <script>
+        // external js: packery.pkgd.js, jquery-ui-draggable.js
+
+        // initialize Packery
+        var $grid = $('.grid').packery({
+            itemSelector: '.grid-item',
+            // columnWidth helps with drop positioning
+            columnWidth: 100
+        });
+
+        // make all items draggable
+        var $items = $grid.find('.grid-item').draggable();
+        // bind drag events to Packery
+        $grid.packery('bindUIDraggableEvents', $items);
+    </script>
+
+
+</body>
+
+</html>
